@@ -85,7 +85,7 @@ class HttpContentsManager(HttpManagerMixin, ContentsManager):
   def _create(self, model, path):
     self.log.info("create POST %s headers=%s" % (self.base_url, json.dumps(self.default_headers)))
     model['path'] = path
-    req = requests.post("%s" % self.base_url, json = {
+    req = requests.post("%s.jupyter" % self.base_url, json = {
       'notebook': model
     }, headers = self.default_headers)
     if req.status_code == 200:
@@ -98,7 +98,7 @@ class HttpContentsManager(HttpManagerMixin, ContentsManager):
 
   def _update(self, model, path):
     b64_path = base64.b64encode(path.encode('utf-8')).decode()
-    req = requests.put("%s/%s" % (self.base_url, b64_path), json = {
+    req = requests.put("%s/%s.jupyter" % (self.base_url, b64_path), json = {
       'notebook': model
     }, headers = self.default_headers)
     if req.status_code == 200:
